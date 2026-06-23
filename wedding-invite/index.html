@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Our Forever Begins</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <meta property="og:title" content="Ahmed & Samar Wedding">
+  <meta property="og:description" content="Join us on our special day 💍">
+  <meta property="og:image" content="https://ourforeverbegins.netlify.app/preview.jpeg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ourforeverbegins.netlify.app/">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- مكتبة الألعاب النارية الاحترافية المتوافقة مع السكربت السحابي المطور -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+
+<body>
+  <audio id="bg-music" preload="auto" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button class="sound-circle" onclick="toggleSound()">
+  <span id="sound-icon">
+
+    <svg id="icon-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white">
+      <path d="M3 10v4h4l5 4V6L7 10H3z"/>
+      <path d="M14.5 3.5v2.1c2.9 1 5 3.7 5 6.9s-2.1 5.9-5 6.9v2.1c4-1.1 7-4.8 7-9s-3-7.9-7-9z"/>
+    </svg>
+
+    <svg id="icon-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white" style="display:none;">
+      <path d="M16.5 12l3.5 3.5-1.5 1.5L15 13.5 11.5 17H9v-4H5v-2h4V7h2.5L15 10.5l3.5-3.5 1.5 1.5L16.5 12z"/>
+    </svg>
+
+  </span>
+</button>
+
+<script>
+const audio = document.getElementById("bg-music");
+const iconOn = document.getElementById("icon-on");
+const iconOff = document.getElementById("icon-off");
+
+let started = false;
+
+function startMusic() {
+  if (started) return;
+  
+  // رفع الحظر عن الصوت عبر التفاعل الأول للمستخدم
+  audio.play()
+    .then(() => {
+      started = true;
+      iconOn.style.display = "block";
+      iconOff.style.display = "none";
+      // إزالة المستمعين فور نجاح التشغيل لتوفير الأداء
+      document.removeEventListener("click", startMusic);
+      document.removeEventListener("touchstart", startMusic);
+    })
+    .catch((error) => {
+      console.log("المتصفح يمنع التشغيل التلقائي حتى الآن:", error);
+    });
+}
+
+// الاستماع لأي نقرة أو لمسة في أي مكان بالصفحة لتشغيل الصوت فوراً
+document.addEventListener("click", startMusic, { once: true });
+document.addEventListener("touchstart", startMusic, { once: true });
+
+function toggleSound() {
+  // إذا لم يكن قد بدأ بعد، نقوم بتشغيله
+  if (!started) {
+    audio.play().then(() => { started = true; });
+  }
+
+  if (audio.paused) {
+    audio.play();
+    iconOn.style.display = "block";
+    iconOff.style.display = "none";
+  } else {
+    audio.pause();
+    iconOn.style.display = "none";
+    iconOff.style.display = "block";
+  }
+}
+</script>
+
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="wedding.mp4" type="video/mp4">
+  </video>
+
+  <!-- Overlay -->
+  <div class="overlay"></div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <h1>Ahmed & Samar</h1>
+    <h2>Our Forever Begins</h2>
+    <p>We Are Getting Married</p>
+
+    <span>Save The Date • MON • 6 Jul 2026 • 8:00 PM</span>
+
+    <h2>Welcome to the most special day of our lives</h2>
+    <p>We can't wait to celebrate with you</p>
+
+    <!-- Countdown -->
+    <div class="countdown-box">
+      <h2>Counting Down to Forever</h2>
+      <h1 id="countdown"></h1>
+    </div>
+
+    <button class="rsvp-btn" onclick="handleCongrats()">
+      Congratulations
+    </button>
+    <div class="guest-counter">
+      Congrats: <span id="guestCount">0</span>
+    </div>
+
+    <!-- Location -->
+    <h2>Location: Maadi, Cairo</h2>
+
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.2643684724035!2d31.238348223670084!3d29.971831474960254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145847916b32b001%3A0xb0245444266c23e7!2sSolitaire%20Hall%20Maadi!5e0!3m2!1sar!2seg!4v1777299516568!5m2!1sar!2seg"
+      width="300"
+      height="250"
+      style="border:0; border-radius:15px; margin-top:10px;"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
+
+    <p>Solitaire Hall Maadi</p>
+
+  </div>
+
+  <!-- تعديل 1: العداد التنازلي مضبوط على الساعة 8:00 مساءً بدقة -->
+  <script>
+    var weddingDate = new Date("July 6, 2026 20:00:00").getTime();
+
+    var x = setInterval(function () {
+      var now = new Date().getTime();
+      var distance = weddingDate - now;
+
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "Just Married! 💍";
+        return;
+      }
+
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML =
+        days + "D " + hours + "H " + minutes + "M " + seconds + "S";
+    }, 1000);
+  </script>
+
+  <!-- الكود الجديد المحدث للعداد السحابي المشترك والألعاب النارية -->
+<script>
+  const binID = "6a06466dc0954111d824f08d"; 
+  const apiEndpoint = `https://api.jsonbin.io/v3/b/${binID}`; 
+  const apiKey = "$2a$10$4V5XC6QhxwBFiL9BzfqZguOPAY6v3Y05J8QdiEE8sf/0XDez6eSCu";
+
+  // دالة واحدة نظيفة ومدمجة لجلب العدد الحالي بدون تكرار
+  function getLiveCount() {
+    fetch(`${apiEndpoint}/latest?nocache=${new Date().getTime()}`, {
+      headers: { 
+        "X-Master-Key": apiKey,
+        "X-Bin-Meta": "false" 
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error();
+      return res.json();
+    })
+    .then(data => {
+      // قراءة ذكية تدعم الشكلين المباشر وغير المباشر للبيانات القادمة من السيرفر
+      let liveValue = data.count !== undefined ? data.count : (data.record ? data.record.count : 0);
+      document.getElementById("guestCount").innerText = liveValue;
+    })
+    .catch(() => {
+      document.getElementById("guestCount").innerText = localStorage.getItem("guestCount") || 0;
+    });
+  }
+  window.addEventListener('DOMContentLoaded', getLiveCount);
+
+  function addGuest() {
+    // جلب القيمة الدقيقة المخزنة على السيرفر الآن قبل الزيادة لمنع التداخل
+    fetch(`${apiEndpoint}/latest?nocache=${new Date().getTime()}`, {
+      headers: { 
+        "X-Master-Key": apiKey,
+        "X-Bin-Meta": "false"
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error();
+      return res.json();
+    })
+    .then(data => {
+      let currentCount = data.count !== undefined ? data.count : (data.record ? data.record.count : 0);
+      let newCount = currentCount + 1;
+
+      // تحديث السيرفر بالهيكل الكامل المباشر
+      return fetch(apiEndpoint, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': apiKey
+        },
+        body: JSON.stringify({ count: newCount })
+      });
+    })
+    .then(res => {
+      if (!res.ok) throw new Error();
+      return res.json();
+    })
+    .then(data => {
+      // معالجة القيمة الراجعة من الـ PUT سواء كانت داخل record أو مباشرة
+      let finalCount = data.count !== undefined ? data.count : (data.record ? data.record.count : 0);
+      
+      // إذا أرجع السيرفر كائناً فارغاً نعتمد على الحسبة المحلية الصحيحة
+      if (finalCount === 0) finalCount = parseInt(document.getElementById("guestCount").innerText) + 1;
+
+      document.getElementById("guestCount").innerText = finalCount;
+      localStorage.setItem("guestCount", finalCount);
+    })
+    .catch(() => {
+      let count = parseInt(localStorage.getItem("guestCount") || 0) + 1;
+      localStorage.setItem("guestCount", count);
+      document.getElementById("guestCount").innerText = count;
+    });
+  }
+
+  function triggerFireworks() {
+    var duration = 2.5 * 1000;
+    var end = Date.now() + duration;
+
+    (function frame() {
+      confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0, y: 0.85 } });
+      confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1, y: 0.85 } });
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
+  }
+
+  function handleCongrats() {
+    triggerFireworks();
+
+    if (localStorage.getItem("hasCongratulated") === "true") {
+      console.log("تم تسجيل تبريكاتك مسبقاً، شكراً لك!");
+      return; 
+    }
+
+    addGuest();
+    localStorage.setItem("hasCongratulated", "true");
+  }
+</script>
+</body>
+</html>
